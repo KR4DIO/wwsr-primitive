@@ -418,6 +418,7 @@ buf4.oth2 = buf2[239];
 //------------------
 buf5.delay1 = buf2[240];
 buf5.tempi=buf2[252];
+	strcpy(buf5.winddirection,"N/A");
 	if (buf5.tempi==0) strcpy(buf5.winddirection,"N");
 	if (buf5.tempi==1) strcpy(buf5.winddirection,"NNE");
 	if (buf5.tempi==2) strcpy(buf5.winddirection,"NE");
@@ -487,30 +488,22 @@ buf4.oth2 = buf2[287];
 if ( showJSON) {
   printf("{\"temperature\":%4.1f,\"humidity\":%d,\"pressure\":%6.1f}\n",
 	 buf5.tindoor/10.0, buf5.hindoor, buf5.pressure/10.0);
-  printf ("{\"interval\t%d min\n", buf5.delay1);
-  printf ("Indoor humidity\t%d %%\n", buf5.hindoor);
-  printf ("Outdoor humidity\t%d %%\n", buf5.houtdoor);
-  if ((buf2[243] & 128) > 0) {
-	printf ("Indoor temperature\t-%d.%d C\n", buf5.tindoor / 10, abs(buf5.tindoor % 10));
-  } else {
-	printf ("Indoor temperature\t%d.%d C\n", buf5.tindoor / 10, abs(buf5.tindoor % 10));
-  };
-  if ((buf2[246] & 128) > 0) {
-	printf ("Outdoor temperature\t-%d.%d C\n", buf5.toutdoor / 10, abs(buf5.toutdoor % 10));
-  } else {
-	printf ("Outdoor temperature\t%d.%d C\n", buf5.toutdoor / 10, abs(buf5.toutdoor % 10));
-  };
-  printf ("Wind speed\t%d.%d m/s\n", buf5.swind / 10, abs(buf5.swind %10));
-  printf ("Wind gust\t%d.%d m/s\n", buf5.swind2 / 10, abs(buf5.swind %10));
-  printf ("Wind direction\t%d %s\n", buf2[252], buf5.winddirection);
+  printf ("{\"interval\":%d,", buf5.delay1);
+  printf ("\"indoor humidity\":%d,", buf5.hindoor);
+  printf ("\"outdoor humidity\":%d,", buf5.houtdoor);
+  printf ("\"indoor temperature\":%4.1f,", buf5.tindoor/10.0);
+  printf ("\"outdoor temperature\":%4.1f,", buf5.toutdoor/10.0);
+  printf ("\"wind\":%4.1f,", buf5.swind/10.0);
+  printf ("\"gust\":%4.1f,", buf5.swind2/10.0);
+  printf ("\"direction\":\"%s\",", buf5.winddirection);
   if (buf5.delay1 != 0) {
-	printf ("Rain 1h\t%.1f mm/h\n", (double)((buf5.rain2 - buf4.rain2) + (buf5.rain1 - buf4.rain1)*256)*0.3*(60/buf5.delay1) );
+	printf ("\"rain\":%.1f,", (double)((buf5.rain2 - buf4.rain2) + (buf5.rain1 - buf4.rain1)*256)*0.3*(60/buf5.delay1) );
   } else {
-	printf ("Rain 1h\t%.1f mm/h\n", 0.0);
+	printf ("\"rain\":%.1f,", 0.0);
   }
-  printf ("Rain total\t%.1f  mm\n", (double)(buf5.rain2 + buf5.rain1*256) * 0.3);
-  printf ("Air pressure\t%d.%d hPa\n", buf5.pressure / 10, buf5.pressure % 10);
-  printf ("\n");
+  printf ("\"rain total\":%.1f,", (double)(buf5.rain2 + buf5.rain1*256) * 0.3);
+  printf ("pressure\":%4.1f", buf5.pressure/10.0);
+  printf ("}\n");
   _close_readw();
   exit(0);
 }
