@@ -497,7 +497,7 @@ if ( showJSON) {
     printf ("\"wind\":%4.1f,", buf5.swind/10.0);
   if(buf5.swind2 != 255)
     printf ("\"gust\":%4.1f,", buf5.swind2/10.0);
-  if(buf2[252] > 15)
+  if(buf2[252] < 16)
     printf ("\"direction\":\"%s\",", buf5.winddirection);
   if (buf5.delay1 != 0) {
 	printf ("\"rain\":%.1f,", (double)((buf5.rain2 - buf4.rain2) + (buf5.rain1 - buf4.rain1)*256)*0.3*(60/buf5.delay1) );
