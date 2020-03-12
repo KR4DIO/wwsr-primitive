@@ -486,8 +486,6 @@ buf4.oth2 = buf2[287];
 */
 
 if ( showJSON) {
-  printf("{\"temperature\":%4.1f,\"humidity\":%d,\"pressure\":%6.1f}\n",
-	 buf5.tindoor/10.0, buf5.hindoor, buf5.pressure/10.0);
   printf ("{\"interval\":%d,", buf5.delay1);
   printf ("\"indoor humidity\":%d,", buf5.hindoor);
   printf ("\"outdoor humidity\":%d,", buf5.houtdoor);
