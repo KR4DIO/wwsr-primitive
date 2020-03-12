@@ -500,7 +500,7 @@ if ( showJSON) {
 	printf ("\"rain\":%.1f,", 0.0);
   }
   printf ("\"rain total\":%.1f,", (double)(buf5.rain2 + buf5.rain1*256) * 0.3);
-  printf ("pressure\":%4.1f", buf5.pressure/10.0);
+  printf ("\"pressure\":%4.1f", buf5.pressure/10.0);
   printf ("}\n");
   _close_readw();
   exit(0);
