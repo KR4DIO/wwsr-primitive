@@ -487,10 +487,35 @@ buf4.oth2 = buf2[287];
 if ( showJSON) {
   printf("{\"temperature\":%4.1f,\"humidity\":%d,\"pressure\":%6.1f}\n",
 	 buf5.tindoor/10.0, buf5.hindoor, buf5.pressure/10.0);
+  printf ("{\"interval\t%d min\n", buf5.delay1);
+  printf ("Indoor humidity\t%d %%\n", buf5.hindoor);
+  printf ("Outdoor humidity\t%d %%\n", buf5.houtdoor);
+  if ((buf2[243] & 128) > 0) {
+	printf ("Indoor temperature\t-%d.%d C\n", buf5.tindoor / 10, abs(buf5.tindoor % 10));
+  } else {
+	printf ("Indoor temperature\t%d.%d C\n", buf5.tindoor / 10, abs(buf5.tindoor % 10));
+  };
+  if ((buf2[246] & 128) > 0) {
+	printf ("Outdoor temperature\t-%d.%d C\n", buf5.toutdoor / 10, abs(buf5.toutdoor % 10));
+  } else {
+	printf ("Outdoor temperature\t%d.%d C\n", buf5.toutdoor / 10, abs(buf5.toutdoor % 10));
+  };
+  printf ("Wind speed\t%d.%d m/s\n", buf5.swind / 10, abs(buf5.swind %10));
+  printf ("Wind gust\t%d.%d m/s\n", buf5.swind2 / 10, abs(buf5.swind %10));
+  printf ("Wind direction\t%d %s\n", buf2[252], buf5.winddirection);
+  if (buf5.delay1 != 0) {
+	printf ("Rain 1h\t%.1f mm/h\n", (double)((buf5.rain2 - buf4.rain2) + (buf5.rain1 - buf4.rain1)*256)*0.3*(60/buf5.delay1) );
+  } else {
+	printf ("Rain 1h\t%.1f mm/h\n", 0.0);
+  }
+  printf ("Rain total\t%.1f  mm\n", (double)(buf5.rain2 + buf5.rain1*256) * 0.3);
+  printf ("Air pressure\t%d.%d hPa\n", buf5.pressure / 10, buf5.pressure % 10);
+  printf ("\n");
+  _close_readw();
   exit(0);
 }
-
-
+	
+	
 printf("Last saved values:\n");
 unsigned int remain;
 if ( (showall==1) | ( o1==1) ) printf("224:\t\tinterval:\t\t%5d\n", buf4.delay1);
