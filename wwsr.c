@@ -487,6 +487,7 @@ buf4.oth2 = buf2[287];
 
 if ( showJSON) {
   printf ("{\"interval\":%d,", buf5.delay1);
+  printf ("\"timestamp\":\"%4d-%02d-%02dT%02d:%02d%c%02d:00\",", 2000 + (10 * (buf2[43]>>4) + (buf2[43] & 0x0f)), (10 * (buf2[44]>>4) + (buf2[44] & 0x0f)), (10 * (buf2[45]>>4) + (buf2[45] & 0x0f)), (10 * (buf2[46]>>4) + (buf2[46] & 0x0f)), (10 * (buf2[47]>>4) + (buf2[47] & 0x0f)), (buf2[24]&0x80)?'-':'+', (buf2[24] & 0x7f));	
   printf ("\"indoor humidity\":%d,", buf5.hindoor);
   if(buf5.houtdoor != 255)
     printf ("\"outdoor humidity\":%d,", buf5.houtdoor);
